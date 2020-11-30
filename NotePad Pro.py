@@ -60,6 +60,7 @@ class Window(Frame):
         editMenu = Menu(menu)
         editMenu.add_command(label="Undo     Ctrl+z", command=entry.edit_undo)
         editMenu.add_command(label="Redo     Ctrl+y", command=entry.edit_redo)
+        editMenu.add_command(label="Clear", command=self.clear)
 
         menu.add_cascade(label="Edit", menu=editMenu)
 
@@ -78,6 +79,9 @@ class Window(Frame):
 
     # def
 
+    # clear
+    def clear(self):
+        entry.delete(1.0, END)
     # jpg
     def jpg(self):
         from PIL import Image, ImageTk
