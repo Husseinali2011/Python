@@ -77,6 +77,7 @@ class Window(Frame):
 
 
     # def
+
     # jpg
     def jpg(self):
         from PIL import Image, ImageTk
@@ -343,39 +344,45 @@ class Window(Frame):
 
     # saveas
     def saveas(self):
-        import tkinter.filedialog
-        opain = filedialog.asksaveasfilename(defaultextension=".*", title="Save File", filetypes=(("Text Files", "*.txt"), ("All Files", "*.*"), ("html", "*.html")))
-        if opain is None:
-            return ()
-        entry = self.entry.get(1.0, END)
-        opain.write(entry)
-        opain.close()
-        self.current_open_file = entry.name
+        file2 = filedialog.asksaveasfile(initialdir="C:\\Users\\Cakow\\PycharmProjects\\Main",
+                                        defaultextension='.txt',
+                                        filetypes=[
+                                            ("Text file", ".txt"),
+                                            ("HTML file", ".html"),
+                                            ("All files", ".*"),
+                                        ])
+        if file2 is None:
+            return
+        filetext = str(entry.get(1.0, END))
+        # filetext = input("Enter some text I guess: ") //use this if you want to use console window
+        file2.write(filetext)
+        file2.close()
+
 
     # save
     def save(self, tkFileDialog=None):
-        s = {key: self.settings[key].get() for key in self.settings}
+        file = filedialog.asksaveasfile(initialdir="C:\\Users\\Cakow\\PycharmProjects\\Main",
+                                        defaultextension='.txt',
+                                        filetypes=[
+                                            ("Text file", ".txt"),
+                                            ("HTML file", ".html"),
+                                            ("All files", ".*"),
+                                        ])
+        if file is None:
+            return
+        filetext = str(entry.get(1.0, END))
+        # filetext = input("Enter some text I guess: ") //use this if you want to use console window
+        file.write(filetext)
+        file.close()
 
-        if self.store_last_settings:
-            if not ttk.path.exists(self.default_path_to_pref):
-                ttk.makedirs(self.default_path_to_pref)
-            with open(ttk.path.join(self.default_path_to_pref,
-                                    '_last_settings.json'), 'w') as f:
-                f.write(json.dumps(s))
-            self.store_last_settings = False
-        else:
-            path_to_pref = filedialog.asksaveasfilename(
-                defaultextension='.json', filetypes=[("json files", '*.json')],
-                initialdir=self.default_path_to_pref,
-                title="Choose filename")
-            with open(path_to_pref, 'w') as f:
-                f.write(json.dumps(s))
-        root.title('New File - TextPad!')
 
     # opain
     def opain(self):
-        root.filename = filedialog.askopenfilename(initialdir="/", title="Select A File",filetypes=(("txt files", "*.txt"), ("all files", "*.*")))
-        root.title('file - Notepad pro')
+        file = filedialog.askopenfile(mode='r',filetypes=(("txt files", "*.txt"), ("all files", "*.*")))
+        if file is not None:
+            content = file.read()
+        entry.insert(INSERT,content)
+
 
 
 
