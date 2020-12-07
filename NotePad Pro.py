@@ -39,7 +39,7 @@ class Window(Frame):
         self.editor = None
         self.path = None
         self.entry = None
-        self.master = master
+        self.mastetr = master
         menu = Menu(self.master)
         self.master.config(menu=menu)
 
