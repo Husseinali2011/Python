@@ -39,7 +39,7 @@ class Window(Frame):
         self.editor = None
         self.path = None
         self.entry = None
-        self.mastetr = master
+        self.master = master
         menu = Menu(self.master)
         self.master.config(menu=menu)
 
@@ -58,8 +58,8 @@ class Window(Frame):
 
         # editMenu
         editMenu = Menu(menu)
-        editMenu.add_command(label="Undo     Ctrl+z", command=entry.edit_undo)
-        editMenu.add_command(label="Redo     Ctrl+y", command=entry.edit_redo)
+        editMenu.add_command(label="Undo     Ctrl+z", command=text.edit_undo)
+        editMenu.add_command(label="Redo     Ctrl+y", command=text.edit_redo)
         editMenu.add_command(label="Clear", command=self.clear)
 
         menu.add_cascade(label="Edit", menu=editMenu)
@@ -81,7 +81,7 @@ class Window(Frame):
 
     # clear
     def clear(self):
-        entry.delete(1.0, END)
+        text.delete(1.0, END)
     # jpg
     def jpg(self):
         from PIL import Image, ImageTk
@@ -330,7 +330,7 @@ class Window(Frame):
         tkinter.messagebox.showinfo('View Help', 'Hi, if you need help, read and learn If you want to save the file, go to File, you will find a New window, Save, Save, S, Open, Print, Page Setup, and Exit. If you want to modify, go to Edit')
     # window
     def window(self):
-        from text import root
+        from notepadpro import root
 
     # print
     def print(self):
@@ -357,7 +357,7 @@ class Window(Frame):
                                         ])
         if file2 is None:
             return
-        filetext = str(entry.get(1.0, END))
+        filetext = str(text.get(1.0, END))
         # filetext = input("Enter some text I guess: ") //use this if you want to use console window
         file2.write(filetext)
         file2.close()
@@ -365,19 +365,19 @@ class Window(Frame):
 
     # save
     def save(self, tkFileDialog=None):
-        file = filedialog.asksaveasfile(initialdir="C:\\Users\\Cakow\\PycharmProjects\\Main",
+        file1 = filedialog.asksaveasfile(initialdir="C:\\Users\\Cakow\\PycharmProjects\\Main",
                                         defaultextension='.txt',
                                         filetypes=[
                                             ("Text file", ".txt"),
                                             ("HTML file", ".html"),
                                             ("All files", ".*"),
                                         ])
-        if file is None:
+        if file1 is None:
             return
-        filetext = str(entry.get(1.0, END))
+        filetext = str(text.get(1.0, END))
         # filetext = input("Enter some text I guess: ") //use this if you want to use console window
-        file.write(filetext)
-        file.close()
+        file1.write(filetext)
+        file1.close()
 
 
     # opain
@@ -385,24 +385,18 @@ class Window(Frame):
         file = filedialog.askopenfile(mode='r',filetypes=(("txt files", "*.txt"), ("all files", "*.*")))
         if file is not None:
             content = file.read()
-        entry.insert(INSERT,content)
+        text.insert(INSERT,content)
 
 
 
 
 # text
-entry = Text(root, height=43, width=170, wrap=WORD, undo=True)
-entry.place(x=0, y=0)
+text = Text(root, height=43, width=170, wrap=WORD, undo=True)
+text.place(x=0, y=0)
 app = Window(root)
 root.wm_title("Notepad pro")
 # icon
-photo = PhotoImage(file="62930-clipboard-icon.png")
-root.iconphoto(False, photo)
-def hi():
-    file = text = entry
-
-    if file:
-        win32api.ShellExecute(0, 'print', file, None, '.', 0)
+root.iconbitmap("62930-clipboard-icon_1.ico")
 
 root.iconify()
 root.deiconify()
